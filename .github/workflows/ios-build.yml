@@ -5,7 +5,6 @@ on:
 
 jobs:
   build-ios:
-    name: iOS Build
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,32 +15,33 @@ jobs:
       
       - run: flutter pub get
       
-      - name: Install CocoaPods
+      - name: Install pods
         run: |
           cd ios
           pod install
       
-      - name: Disable codesigning for CI
+      - name: Build with xcodebuild (unsigned)
         run: |
           cd ios
-          # Удаляем все упоминания DEVELOPMENT_TEAM
-          sed -i '' 's/DEVELOPMENT_TEAM = .*/DEVELOPMENT_TEAM = ""/g' Runner.xcodeproj/project.pbxproj
-          # Отключаем автоматическую подпись
-          sed -i '' 's/ProvisioningStyle = .*/ProvisioningStyle = Manual/g' Runner.xcodeproj/project.pbxproj
-      
-      - name: Build IPA (unsigned)
-        run: |
-          cd ios
-          flutter build ios --release --no-codesign
+          xcodebuild -workspace Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -derivedDataPath build \
+            -sdk iphoneos \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            DEVELOPMENT_TEAM="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            clean build
       
       - name: Create Payload
         run: |
           mkdir -p Payload
-          cp -r build/ios/iphoneos/Runner.app Payload/
+          cp -r ios/build/Build/Products/Release-iphoneos/Runner.app Payload/
       
       - name: Zip IPA
-        run: |
-          zip -r F1-Acker.ipa Payload
+        run: zip -r F1-Acker.ipa Payload
       
       - name: Upload IPA
         uses: actions/upload-artifact@v4
