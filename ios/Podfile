@@ -34,18 +34,18 @@ target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
+# ОДИН ОБЪЕДИНЁННЫЙ БЛОК post_install
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
         '$(inherited)',
-        'PERMISSION_LOCATION=1',   # ВКЛЮЧАЕТ ГЕОЛОКАЦИЮ
+        'PERMISSION_LOCATION=1',
       ]
     end
   end
-end
 
-post_install do |installer|
+  # Добавляем настройки Flutter (это важно!)
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
   end

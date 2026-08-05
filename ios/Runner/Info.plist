@@ -2,16 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<!-- === GPS РАЗРЕШЕНИЯ === -->
 	<key>NSLocationWhenInUseUsageDescription</key>
-<string>Для отображения вашего местоположения на карте телеметрии</string>
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>Для отображения вашего местоположения на карте телеметрии</string>
+	<string>Для отображения вашего местоположения на карте телеметрии</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Для отображения вашего местоположения на карте телеметрии</string>
+
+	<!-- === BLUETOOTH РАЗРЕШЕНИЕ === -->
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Для настройки планера через Bluetooth</string>
+
+	<!-- === ФОНОВЫЕ РЕЖИМЫ === -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>bluetooth-central</string>
+	</array>
+
+	<!-- === ОСНОВНЫЕ НАСТРОЙКИ === -->
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Flutter Application 1</string>
+	<string>ТЕЛЕМЕТРИЯ</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -19,7 +33,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>flutter_application_1</string>
+	<string>ТЕЛЕМЕТРИЯ</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
