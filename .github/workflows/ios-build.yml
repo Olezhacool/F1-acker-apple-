@@ -16,7 +16,14 @@ jobs:
       - run: flutter pub get
       - run: pod repo update
         working-directory: ios
+      - name: Set up provisioning
+        run: |
+          cd ios
+          # Создаём пустой файл для автоматической подписи
+          echo "PROVISIONING_PROFILE_SPECIFIER = ''" >> Runner/Config.xcconfig
+          echo "DEVELOPMENT_TEAM = ''" >> Runner/Config.xcconfig
       - run: flutter build ios --release --no-codesign
+        working-directory: ios
       - run: mkdir Payload
         working-directory: build/ios/iphoneos
       - run: mv Runner.app/ Payload
